@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<title>Chrome Extension</title>
+		<link rel="stylesheet" type="text/css" href="popup.css">
+		<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="popup.js"></script>
+	</head>
+    <body>
+    	<div id="saved"></div>
+        <input type="button" id="clear" value="Clear List" />
+   		<div id="time-input">
+	    	<p>
+	    		Enter a time
+	    	</p>
+        	<input type="text" placeholder="12" class="time-picker" id="hour"/>
+        	<p id="time-picker-colon">:</p>
+        	<input type="text" placeholder="00" class="time-picker"/>
+        </div>
+        <textarea placeholder="Type in your reminder here!" id="note"></textarea>
+        <input type="button" id="create-reminder" value="Create Reminder" />
+    </body>
+</html>

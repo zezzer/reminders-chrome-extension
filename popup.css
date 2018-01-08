@@ -1,0 +1,21 @@
+body {
+	width: 150px;
+}
+
+.time-picker {
+	width: 20px;
+	display: inline-block;
+	float:left;
+}
+
+#time-picker-colon {
+	display: inline-block;
+	font-size: 10px;
+	float:left;
+	bottom: 7px;
+	position: relative;
+}
+
+#note {
+	height: 70px;
+}
