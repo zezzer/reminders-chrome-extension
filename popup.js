@@ -1,30 +1,48 @@
 document.addEventListener("DOMContentLoaded", function(event) {
-	var hour = localStorage.getItem("hour");
-	if(hour) {
-		hour = JSON.parse(hour);
-		for(i = 0; i < hour.length; i++) {
-			addReminder(hour[i]);
+	var hours = localStorage.getItem("hour");
+	if(hours) {
+		hours = JSON.parse(hours);
+		for(i = 0; i < hours.length; i++) {
+			addReminder(hours, hours[i]);
 		}
 	}
-	document.getElementById("create-reminder").addEventListener('click', function() {
-		if(!hour) 
-			hour = [];
-		var txt = document.getElementById("hour").value;
-		hour.push(txt);
-		localStorage.setItem("hour", JSON.stringify(hour));
-		chrome.extension.getBackgroundPage().console.log(hour);
-		addReminder(txt);
+	document.getElementById("create-reminder").addEventListener("click", function() {
+		if(!hours) 
+			hours = [];
+		var hour_elem = document.getElementById("hour");
+		hours.push(hour_elem.value);
+		localStorage.setItem("hour", JSON.stringify(hours));
+		addReminder(hours, hour_elem.value);
+		hour_elem.value = "";
 	});
-	document.getElementById("clear").addEventListener('click', function() {
-		if(hour) {
-			window.localStorage.clear();
-			document.getElementById("saved").innerHTML = "";
+	document.getElementById("clear").addEventListener("click", function() {
+		window.localStorage.clear();
+		var saved = document.getElementById("saved");
+		while(saved.firstChild) {
+			saved.removeChild(saved.firstChild);
 		}
+		document.style.height="300px"
 	});
 });
 
-function addReminder(val) {
+function addReminder(hours, val) {
+	var saved = document.getElementById("saved");
 	var child = document.createElement("div");
 	child.innerHTML = val;
-	document.getElementById("saved").appendChild(child);
+	saved.appendChild(child);
+
+	var remove = document.createElement("button");
+	remove.class = "remove";
+	remove.innerHTML = "X"
+	remove.addEventListener("click", function() {
+		var idx = hours.indexOf(val);
+		var node = saved.childNodes[idx];
+		saved.removeChild(node);
+		while(node.firstChild) {
+			node.removeChild(node.firstChild);
+		}
+		hours.splice(idx, 1);
+		localStorage.setItem("hour", JSON.stringify(hours));
+	});
+	child.appendChild(remove);
 }
