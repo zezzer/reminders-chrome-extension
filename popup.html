@@ -8,14 +8,18 @@
 	</head>
     <body>
     	<div id="saved"></div>
-        <input type="button" id="clear" value="Clear List" />
+        <input type="button" id="clear" value="Clear All Reminders" />
    		<div id="time-input">
 	    	<p>
 	    		Enter a time
 	    	</p>
         	<input type="text" placeholder="12" class="time-picker" id="hour"/>
         	<p id="time-picker-colon">:</p>
-        	<input type="text" placeholder="00" class="time-picker"/>
+        	<input type="text" placeholder="00" class="time-picker" id="minutes"/>
+        	<input type="radio" name="radSize" id="am" class="am-pm" value="am"/ checked="checked">
+        	<label for="am-pm">AM</label>
+        	<input type="radio" name="radSize" id="pm" class="am-pm" value="pm"/>
+        	<label for="am-pm">PM</label>
         </div>
         <textarea placeholder="Type in your reminder here!" id="note"></textarea>
         <input type="button" id="create-reminder" value="Create Reminder" />
