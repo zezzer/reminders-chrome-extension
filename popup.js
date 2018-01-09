@@ -6,6 +6,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			addReminder(entries, entries[i]);
 		}
 	}
+	document.getElementById("hour").addEventListener("focus", function() {
+		this.select();
+	});
+	document.getElementById("minutes").addEventListener("focus", function() {
+		this.select();
+	});
+	document.getElementById("minutes").addEventListener("blur", function() {
+		var minute = parseInt(this.value);
+		if(isNaN(minute)) 
+			minute = "00";
+		else if(minute < 10)
+			minute = "0" + minute;
+		this.value = minute;
+	});
 	document.getElementById("create-reminder").addEventListener("click", function() {
 		if(!entries) 
 			entries = [];
