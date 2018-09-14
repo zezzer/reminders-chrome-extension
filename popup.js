@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 		if(document.getElementById("am").checked)
 			meridiem = "AM"
-		else
+		else 
 			meridiem = "PM";
 
 		var flag = 0;
@@ -61,12 +61,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		localStorage.setItem("entries", JSON.stringify(entries));
 		addReminder(entries, entry);
 
-		document.getElementById("hour").value = "";
-		document.getElementById("minutes").value = "";
+		if(meridiem === "PM")
+			hour += 12;
+		if(hour === 12 && meridiem === "AM")
+			hour = 0;
+
+		var today = new Date();
+		var alarm_date = new Date();
+		if(hour < alarm_date.getHours() || (hour == alarm_date.getHours() && minute < alarm_date.getMinutes()) )
+			alarm_date.setDate(alarm_date.getDate() + 1);
+		alarm_date.setHours(hour);
+		alarm_date.setMinutes(minute);
+		alarm_date.setMilliseconds(0);
+
+		chrome.alarms.create("remind", {when: alarm_date.getTime()});
+
+		document.getElementById("hour").value = "12";
+		document.getElementById("minutes").value = "00";
 		document.getElementById("note").value = "";
-	});
+	}); 
+
 	document.getElementById("clear").addEventListener("click", function() {
-		window.localStorage.clear();
+		window.localStorage.clear("entries");
 		var saved = document.getElementById("saved");
 		while(saved.firstChild) {
 			saved.removeChild(saved.firstChild);
